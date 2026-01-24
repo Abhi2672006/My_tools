@@ -30,10 +30,10 @@ if [ -n "$path" ]; then
     echo "Raw file data:$(xxd -c 16 ${path})"
     file=$(head -c 16 "$path" | xxd -p | head -n 1 | tr -d '\n')
     
-    echo -e "File command output:\n"
+    echo -e "\nFile command output:\n"
     if [[ "$ext" == "txt" ]]; then
     	if [[ "$file" == 7f454c46* || "$file" == 4d5a* || "$file" == 25504446* || "$file" == ffd8ff* || "$file" == 89504e* ]]; then
-    	    echo -e "\n\e[31mSuspicious: Binary file disguised as text.\e[0m"
+    	    echo -e "\e[31m\!Suspicious: Binary file disguised as text.\e[0m"
     	else
     	    echo "Looks like a normal text file."
     	fi
