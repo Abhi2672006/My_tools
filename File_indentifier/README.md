@@ -45,6 +45,11 @@ git add file-type-identifier/README.md
 git commit -m "Add README for file type identifier project"
 git push
 ```
+
+# NOte 
+
+There are two practice files named **fake.txt** and **prac.txt** you can use them you practice.
+
  Author
 
 Abhishek Kumar

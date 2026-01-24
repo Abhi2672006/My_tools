@@ -21,17 +21,25 @@ if [ -z "$filename" ]; then
     exit 1
 fi
 
-echo -e "\n\e[32mMagic Number Analysis\e[0m"
+echo -e "\n\e[32mMagic Number Analysis:\e[0m"
 
 ext=${filename##*.}
 path=$(find ~ -type f -name "$filename" 2>/dev/null | head -n 1)
 
 if [ -n "$path" ]; then
+    echo "Raw file data:$(xxd -c 16 ${path})"
     file=$(head -c 16 "$path" | xxd -p | head -n 1 | tr -d '\n')
     
     echo -e "File command output:\n"
-     
-    if [[ ${magic[$ext]} == ${file:0:${#magic[$ext]}} ]]; then
+    if [[ "$ext" == "txt" ]]; then
+    	if [[ "$file" == 7f454c46* || "$file" == 4d5a* || "$file" == 25504446* || "$file" == ffd8ff* || "$file" == 89504e* ]]; then
+    	    echo -e "\n\e[31mSuspicious: Binary file disguised as text.\e[0m"
+    	else
+    	    echo "Looks like a normal text file."
+    	fi
+    
+
+    elif [[ ${magic[$ext]} == ${file:0:${#magic[$ext]}} ]]; then
         echo "The file '$filename' is a valid .$ext file."
     else
         echo "The file '$filename' is NOT a valid .$ext file."
@@ -40,4 +48,5 @@ if [ -n "$path" ]; then
 else
     echo "File '$filename' not found."
 fi
-
+echo -e "\n\e[34mAuthor: Abhishek Kumar\e[0m"
+exit 0
